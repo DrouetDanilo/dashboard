@@ -2,6 +2,7 @@ import { Grid } from '@mui/material';
 import './App.css'
 import HeaderUI from '/workspaces/dashboard/src/assets/components/HeaderUI.tsx';
 import AlertUI from '/workspaces/dashboard/src/assets/components/AlertUI.tsx';
+import SelectorUI from '/workspaces/dashboard/src/assets/components/SelectorUI.tsx'; // Importa SelectorUI
 
 function App() {
   return (
@@ -21,7 +22,9 @@ function App() {
       </Grid>
       
       {/* Selector */}
-      <Grid size={{ xs: 12, md: 3 }}>Elemento: Selector</Grid>
+      <Grid size={{ xs: 12, md: 3 }}>
+        <SelectorUI /> {/* Usa SelectorUI aquí */}
+      </Grid>
       
       {/* Indicadores */}
       <Grid size={{ xs: 12, md: 9 }}>Elemento: Indicadores</Grid>
