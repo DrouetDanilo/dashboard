@@ -4,8 +4,11 @@ import HeaderUI from '/workspaces/dashboard/src/assets/components/HeaderUI.tsx';
 import AlertUI from '/workspaces/dashboard/src/assets/components/AlertUI.tsx';
 import SelectorUI from '/workspaces/dashboard/src/assets/components/SelectorUI.tsx';
 import IndicatorUI from '/workspaces/dashboard/src/assets/components/IndicatorUI.tsx'; // Importa IndicatorUI
+import DataFetcher from './functions/DataFetcher';
 
 function App() {
+  const dataFetcherOutput = DataFetcher();
+
   return (
     <Grid container spacing={5} justifyContent="center" alignItems="center">
       {/* Encabezado */}
@@ -29,18 +32,53 @@ function App() {
       
       {/* Indicadores */}
       <Grid container size={{ xs: 12, md: 9 }}>
-        <Grid size={{ xs: 12, md: 3 }}>
-          <IndicatorUI title="Temperatura (2m)" description="XX°C" />
-        </Grid>
-        <Grid size={{ xs: 12, md: 3 }}>
-          <IndicatorUI title="Temperatura aparente" description="YY°C" />
-        </Grid>
-        <Grid size={{ xs: 12, md: 3 }}>
-          <IndicatorUI title="Velocidad del viento" description="ZZkm/h" />
-        </Grid>
-        <Grid size={{ xs: 12, md: 3 }}>
-          <IndicatorUI title="Humedad relativa" description="NN%" />
-        </Grid>
+        {/* Renderizado condicional de los datos obtenidos */}
+        {dataFetcherOutput.loading && (
+          <Grid size={{ xs: 12 }}>
+            <p>Cargando datos...</p>
+          </Grid>
+        )}
+        {dataFetcherOutput.error && (
+          <Grid size={{ xs: 12 }}>
+            <p>Error: {dataFetcherOutput.error}</p>
+          </Grid>
+        )}
+        {dataFetcherOutput.data && (
+          <>
+            <Grid size={{ xs: 12, md: 3 }}>
+              <IndicatorUI
+                title="Temperatura (2m)"
+                description={
+                  dataFetcherOutput.data.current_weather.temperature +
+                  " " +
+                  dataFetcherOutput.data.current_weather_units.temperature
+                }
+              />
+            </Grid>
+            <Grid size={{ xs: 12, md: 3 }}>
+              <IndicatorUI
+                title="Temperatura aparente"
+                description="-"
+              />
+            </Grid>
+            <Grid size={{ xs: 12, md: 3 }}>
+              <IndicatorUI
+                title="Velocidad del viento"
+                description={
+                  dataFetcherOutput.data.current_weather.windspeed +
+                  " " +
+                  dataFetcherOutput.data.current_weather_units.windspeed
+                }
+              />
+            </Grid>
+            <Grid size={{ xs: 12, md: 3 }}>
+              <IndicatorUI
+                title="Humedad relativa"
+                description="-"
+              />
+            </Grid>
+          </>
+        )}
       </Grid>
       
       {/* Gráfico */}

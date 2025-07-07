@@ -16,7 +16,7 @@ export default function DataFetcher() : DataFetcherOutput {
     useEffect(() => {
 
         // Reemplace con su URL de la API de Open-Meteo obtenida en actividades previas
-        const url = `https://api.open-meteo.com/v1/forecast?latitude=-2.1962&longitude=-79.8862&hourly=temperature_2m&current=temperature_2m,wind_speed_10m,relative_humidity_2m,apparent_temperature&timezone=America%2FChicago`
+        const url = `https://api.open-meteo.com/v1/forecast?latitude=-1.8312&longitude=-78.1835&current_weather=true&timezone=America/Chicago&temperature_unit=celsius&windspeed_unit=kmh&precipitation_unit=mm`
 
         const fetchData = async () => {
 
