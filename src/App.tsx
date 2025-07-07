@@ -2,7 +2,8 @@ import { Grid } from '@mui/material';
 import './App.css'
 import HeaderUI from '/workspaces/dashboard/src/assets/components/HeaderUI.tsx';
 import AlertUI from '/workspaces/dashboard/src/assets/components/AlertUI.tsx';
-import SelectorUI from '/workspaces/dashboard/src/assets/components/SelectorUI.tsx'; // Importa SelectorUI
+import SelectorUI from '/workspaces/dashboard/src/assets/components/SelectorUI.tsx';
+import IndicatorUI from '/workspaces/dashboard/src/assets/components/IndicatorUI.tsx'; // Importa IndicatorUI
 
 function App() {
   return (
@@ -23,11 +24,24 @@ function App() {
       
       {/* Selector */}
       <Grid size={{ xs: 12, md: 3 }}>
-        <SelectorUI /> {/* Usa SelectorUI aquí */}
+        <SelectorUI />
       </Grid>
       
       {/* Indicadores */}
-      <Grid size={{ xs: 12, md: 9 }}>Elemento: Indicadores</Grid>
+      <Grid container size={{ xs: 12, md: 9 }}>
+        <Grid size={{ xs: 12, md: 3 }}>
+          <IndicatorUI title="Temperatura (2m)" description="XX°C" />
+        </Grid>
+        <Grid size={{ xs: 12, md: 3 }}>
+          <IndicatorUI title="Temperatura aparente" description="YY°C" />
+        </Grid>
+        <Grid size={{ xs: 12, md: 3 }}>
+          <IndicatorUI title="Velocidad del viento" description="ZZkm/h" />
+        </Grid>
+        <Grid size={{ xs: 12, md: 3 }}>
+          <IndicatorUI title="Humedad relativa" description="NN%" />
+        </Grid>
+      </Grid>
       
       {/* Gráfico */}
       <Grid size={{ xs: 12, md: 6 }}
