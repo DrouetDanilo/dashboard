@@ -5,6 +5,8 @@ import AlertUI from '/workspaces/dashboard/src/assets/components/AlertUI.tsx';
 import SelectorUI from '/workspaces/dashboard/src/assets/components/SelectorUI.tsx';
 import IndicatorUI from '/workspaces/dashboard/src/assets/components/IndicatorUI.tsx'; // Importa IndicatorUI
 import DataFetcher from './functions/DataFetcher';
+import TableUI from '/workspaces/dashboard/src/assets/components/TableUI.tsx';
+import ChartUI from '/workspaces/dashboard/src/assets/components/ChartUI.tsx';
 
 function App() {
   const dataFetcherOutput = DataFetcher();
@@ -82,15 +84,13 @@ function App() {
       </Grid>
       
       {/* Gráfico */}
-      <Grid size={{ xs: 12, md: 6 }}
-        sx={{ display: { xs: "none", md: "block"} }}>
-        Elemento: Gráfico
+      <Grid size={{ xs: 6, md: 6 }} sx={{ display: { xs: "none", md: "block" } }}>
+        <ChartUI />
       </Grid>
 
       {/* Tabla */}
-      <Grid size={{ xs: 12, md: 6 }}
-        sx={{ display: { xs: "none", md: "block"} }}>
-        Elemento: Tabla
+      <Grid size={{ xs: 6, md: 6 }} sx={{ display: { xs: "none", md: "block" } }}>
+        <TableUI />
       </Grid>
       
       {/* Información adicional */}
