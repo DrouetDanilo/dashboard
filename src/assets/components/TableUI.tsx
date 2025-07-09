@@ -1,5 +1,7 @@
 import Box from '@mui/material/Box';
 import { DataGrid, type GridColDef } from '@mui/x-data-grid';
+import Typography from '@mui/material/Typography';
+import type { Hourly } from '../../types/DashboardTypes';
 
 function combineArrays(arrLabels: Array<string>, arrValues1: Array<number>, arrValues2: Array<number>) {
    return arrLabels.map((label, index) => ({
@@ -14,18 +16,18 @@ const columns: GridColDef[] = [
    { field: 'id', headerName: 'ID', width: 90 },
    {
       field: 'label',
-      headerName: 'Label',
+      headerName: 'Hora',
       width: 150,
    },
    {
       field: 'value1',
-      headerName: 'Value 1',
+      headerName: 'Temp. 2m (°C)',
       width: 150,
    },
    {
       field: 'value2',
-      headerName: 'Value 2',
-      width: 150,
+      headerName: 'Viento 10m (km/h)',
+      width: 170,
    },
    {
       field: 'resumen',
@@ -33,18 +35,34 @@ const columns: GridColDef[] = [
       description: 'No es posible ordenar u ocultar esta columna.',
       sortable: false,
       hideable: false,
-      width: 160,
+      width: 200,
       valueGetter: (_, row) => `${row.label || ''} ${row.value1 || ''} ${row.value2 || ''}`,
    },
 ];
 
-const arrValues1 = [4000, 3000, 2000, 2780, 1890, 2390, 3490];
-const arrValues2 = [2400, 1398, 9800, 3908, 4800, 3800, 4300];
-const arrLabels = ['A','B','C','D','E','F','G'];
+interface TableUIProps {
+  loading: boolean;
+  error: string | null;
+  hourly?: Hourly;
+}
 
-export default function TableUI() {
+export default function TableUI({ loading, error, hourly }: TableUIProps) {
+   if (loading) {
+      return <Typography>Cargando datos de la tabla...</Typography>;
+   }
+   if (error) {
+      return <Typography color="error">Error: {error}</Typography>;
+   }
+   if (!hourly) {
+      return <Typography>No hay datos disponibles.</Typography>;
+   }
 
-   const rows = combineArrays(arrLabels, arrValues1, arrValues2);
+   // Solo mostramos las primeras 7 filas para que coincida con el ejemplo anterior
+   const rows = combineArrays(
+      hourly.time.slice(0, 7),
+      hourly.temperature_2m.slice(0, 7),
+      hourly.wind_speed_10m.slice(0, 7)
+   );
 
    return (
       <Box sx={{ height: 350, width: '100%' }}>

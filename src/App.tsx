@@ -7,9 +7,12 @@ import IndicatorUI from '/workspaces/dashboard/src/assets/components/IndicatorUI
 import DataFetcher from './functions/DataFetcher';
 import TableUI from '/workspaces/dashboard/src/assets/components/TableUI.tsx';
 import ChartUI from '/workspaces/dashboard/src/assets/components/ChartUI.tsx';
+import { useState } from 'react';
 
 function App() {
-  const dataFetcherOutput = DataFetcher();
+  const [city, setCity] = useState('guayaquil'); // Valor por defecto
+
+  const dataFetcherOutput = DataFetcher(city);
 
   return (
     <Grid container spacing={5} justifyContent="center" alignItems="center">
@@ -29,7 +32,7 @@ function App() {
       
       {/* Selector */}
       <Grid size={{ xs: 12, md: 3 }}>
-        <SelectorUI />
+        <SelectorUI city={city} onCityChange={setCity} />
       </Grid>
       
       {/* Indicadores */}
@@ -49,34 +52,34 @@ function App() {
           <>
             <Grid size={{ xs: 12, md: 3 }}>
               <IndicatorUI
-                title="Temperatura (2m)"
+                title="Temperatura"
                 description={
-                  dataFetcherOutput.data.current_weather.temperature +
-                  " " +
-                  dataFetcherOutput.data.current_weather_units.temperature
+                  dataFetcherOutput.data.current_weather.temperature + " °C"
                 }
-              />
-            </Grid>
-            <Grid size={{ xs: 12, md: 3 }}>
-              <IndicatorUI
-                title="Temperatura aparente"
-                description="-"
               />
             </Grid>
             <Grid size={{ xs: 12, md: 3 }}>
               <IndicatorUI
                 title="Velocidad del viento"
                 description={
-                  dataFetcherOutput.data.current_weather.windspeed +
-                  " " +
-                  dataFetcherOutput.data.current_weather_units.windspeed
+                  dataFetcherOutput.data.current_weather.windspeed + " km/h"
                 }
               />
             </Grid>
             <Grid size={{ xs: 12, md: 3 }}>
               <IndicatorUI
-                title="Humedad relativa"
-                description="-"
+                title="Dirección del viento"
+                description={
+                  dataFetcherOutput.data.current_weather.winddirection + "°"
+                }
+              />
+            </Grid>
+            <Grid size={{ xs: 12, md: 3 }}>
+              <IndicatorUI
+                title="Código de clima"
+                description={
+                  dataFetcherOutput.data.current_weather.weathercode.toString()
+                }
               />
             </Grid>
           </>
@@ -85,12 +88,20 @@ function App() {
       
       {/* Gráfico */}
       <Grid size={{ xs: 6, md: 6 }} sx={{ display: { xs: "none", md: "block" } }}>
-        <ChartUI />
+        <ChartUI
+          loading={dataFetcherOutput.loading}
+          error={dataFetcherOutput.error}
+          hourly={dataFetcherOutput.data?.hourly}
+        />
       </Grid>
 
       {/* Tabla */}
       <Grid size={{ xs: 6, md: 6 }} sx={{ display: { xs: "none", md: "block" } }}>
-        <TableUI />
+        <TableUI
+          loading={dataFetcherOutput.loading}
+          error={dataFetcherOutput.error}
+          hourly={dataFetcherOutput.data?.hourly}
+        />
       </Grid>
       
       {/* Información adicional */}

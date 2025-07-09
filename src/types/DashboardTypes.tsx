@@ -4,28 +4,27 @@ export interface OpenMeteoResponse {
   generationtime_ms: number;
   utc_offset_seconds: number;
   timezone: string;
-  timezone_abbreviation: string;
-  elevation: number;
-  current_weather_units: Currentweatherunits;
-  current_weather: Currentweather;
+  current_weather: CurrentWeather;
+  hourly_units: HourlyUnits;
+  hourly: Hourly;
 }
 
-export interface Currentweather {
+export interface CurrentWeather {
   time: string;
-  interval: number;
   temperature: number;
   windspeed: number;
   winddirection: number;
-  is_day: number;
   weathercode: number;
 }
 
-export interface Currentweatherunits {
+export interface HourlyUnits {
   time: string;
-  interval: string;
-  temperature: string;
-  windspeed: string;
-  winddirection: string;
-  is_day: string;
-  weathercode: string;
+  temperature_2m: string;
+  wind_speed_10m: string;
+}
+
+export interface Hourly {
+  time: string[];
+  temperature_2m: number[];
+  wind_speed_10m: number[];
 }

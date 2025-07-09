@@ -1,22 +1,39 @@
 import { LineChart } from '@mui/x-charts/LineChart';
 import Typography from '@mui/material/Typography';
+import type { Hourly } from '../../types/DashboardTypes';
 
-const arrValues1 = [4000, 3000, 2000, 2780, 1890, 2390, 3490];
-const arrValues2 = [2400, 1398, 9800, 3908, 4800, 3800, 4300];
-const arrLabels = ['A','B','C','D','E','F','G'];
+interface ChartUIProps {
+  loading: boolean;
+  error: string | null;
+  hourly?: Hourly;
+}
 
+export default function ChartUI({ loading, error, hourly }: ChartUIProps) {
+   if (loading) {
+      return <Typography>Cargando datos del gráfico...</Typography>;
+   }
+   if (error) {
+      return <Typography color="error">Error: {error}</Typography>;
+   }
+   if (!hourly) {
+      return <Typography>No hay datos disponibles.</Typography>;
+   }
 
-export default function ChartUI() {
+   // Solo mostramos las primeras 7 horas para que el gráfico sea legible
+   const arrLabels = hourly.time.slice(0, 7);
+   const arrValues1 = hourly.temperature_2m.slice(0, 7);
+   const arrValues2 = hourly.wind_speed_10m.slice(0, 7);
+
    return (
       <>
          <Typography variant="h5" component="div">
-            Chart arrLabels vs arrValues1 & arrValues2
+            Temperatura y Viento (primeras 7 horas)
          </Typography>
          <LineChart
             height={300}
             series={[
-               { data: arrValues1, label: 'value1'},
-               { data: arrValues2, label: 'value2'},
+               { data: arrValues1, label: 'Temp. 2m (°C)'},
+               { data: arrValues2, label: 'Viento 10m (km/h)'},
             ]}
             xAxis={[{ scaleType: 'point', data: arrLabels }]}
          />
