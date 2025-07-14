@@ -1,0 +1,35 @@
+{
+  "name": "Clima",
+  "short_name": "Cl",
+  "icons": [
+    {
+      "src": "/yono/pwa-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/yono/pwa-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/yono/pwa-maskable-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/yono/pwa-maskable-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "start_url": "/",
+  "display": "minimal-ui",
+  "background_color": "#FFFFFF",
+  "theme_color": "#323030",
+  "description": "aplicacion de clima"
+}
